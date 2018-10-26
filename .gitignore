@@ -1,0 +1,9 @@
+tmp/*
+*.o
+*.a
+*.so
+*.swp
+*.blend1
+*.s#*
+.~lock*
+
