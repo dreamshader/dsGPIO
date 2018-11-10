@@ -68,7 +68,7 @@ all: $(STATLIBNAME) $(SOLIBNAME) $(EXAMPLE_NAME)
 $(STATLIBNAME): $(LIB_SRC) $(SRC_INC)
 	$(CXX) $(CXXFLAGS) $(CXXEXTRAFLAGS) -c $(LIB_SRC)
 	$(AR) rcs $(STATLIBNAME)  $(LIB_OBJ)
-	$(RANLIB) $(LIB1)
+	$(RANLIB) $(STATLIBNAME)
 
 $(SOLIBNAME): $(LIB_SRC) $(SRC_INC)
 	$(CXX) $(CXXFLAGS) $(CXXEXTRAFLAGS) $(CXXDEBUG) $(CXXLIBSOFLAGS) -c $(LIB_SRC)
@@ -80,17 +80,18 @@ $(EXAMPLE_NAME): $(EXAMPLE_SRC) $(LIB_SRC) $(SRC_INC)
 
 
 install: $(STATLIBNAME) $(SOLIBNAME)
-	sudo install -m 0755 -d              /usr/local/include
-	sudo install -m 0644 dsGPIO.h        /usr/local/include
-	sudo install -m 0755 -d              /usr/local/lib
-	sudo install -m 0644 libdsGPIO.a     /usr/local/lib
-	sudo install -m 0644 libdsGPIO.so    /usr/local/lib
+	sudo install -m 0755 -d                     /usr/local/include
+	sudo install -m 0644 $(SOURCEDIR)/dsGPIO.h  /usr/local/include
+	sudo install -m 0755 -d                     /usr/local/lib
+	sudo install -m 0644 libdsGPIO.a            /usr/local/lib
+	sudo install -m 0644 libdsGPIO.so           /usr/local/lib
 	$(LDCONFIG)
 
 uninstall:
 	sudo rm -f /usr/local/include/dsGPIO.h
 	sudo rm -f /usr/local/lib/libdsGPIO.a
 	sudo rm -f /usr/local/lib/libdsGPIO.so
+	$(LDCONFIG)
 
 clean:
 	$rm *.o *.so *.a
